@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../../services/auth.service'
 import { Router } from '@angular/router'
 import { SharedMaterialModule } from '../shared-material.module'
-import { decodeAndSaveToken } from '../../services/http.service'
 
 @Component({
   selector: 'app-auth',
@@ -53,7 +52,7 @@ export class AuthComponent {
       try {
         const response = await this.authService.login(email, password)
         if (response) {
-          decodeAndSaveToken(response.token)
+          localStorage.setItem('token', response.token)
           await this.router.navigate(['/task'])
         } else {
           this.errorMessage = 'Credenciais inválidas.'

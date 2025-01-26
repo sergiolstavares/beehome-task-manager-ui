@@ -14,8 +14,8 @@ export class TaskService {
     return await this.httpService.request("GET", `${this.apiUrl}/filter?status=${status}`)
   }
 
-  async listTasks(): Promise<any> {
-    return await this.httpService.request('GET', this.apiUrl)
+  async listTasks(page: number, size: number): Promise<any> {
+    return await this.httpService.request('GET', `${this.apiUrl}?page=${page}&size=${size}`)
   }
 
   async getTask(id: string): Promise<any> {

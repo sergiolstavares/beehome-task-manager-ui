@@ -5,8 +5,6 @@ import { catchError } from 'rxjs/operators'
 import { Router } from '@angular/router'
 import { jwtDecode } from 'jwt-decode'
 
-export let userId: string | null = null
-export let userEmail: string | null = null
 
 @Injectable({
   providedIn: 'root',
@@ -55,18 +53,13 @@ export class HttpService {
   }
 }
 
+export function getUserID() {
+  const token = localStorage.getItem('token')
 
-export function decodeAndSaveToken(token: string): void {
-  localStorage.setItem('token', token)
-  try {
+  if (token) {
     const decoded: any = jwtDecode(token)
-    userId = decoded.id || null
-  } catch (error) {
-    console.error('Erro ao decodificar o token JWT:', error)
-    clearUserInfo()
+    return decoded.id
   }
-}
 
-export function clearUserInfo(): void {
-  userId = null
+  return null
 }

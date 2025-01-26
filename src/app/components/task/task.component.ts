@@ -5,7 +5,8 @@ import { MatDialog } from '@angular/material/dialog'
 import { DeleteTaskModalComponent } from './components/delete-task-modal/delete-task-modal.component'
 import { AddAndEditTaskModalComponent } from './components/add-edit-task-modal/add-edit-task-modal.component'
 import { SharedMaterialModule } from '../shared-material.module'
-import { userEmail, userId } from '../../services/http.service'
+import { PageEvent } from '@angular/material/paginator'
+import { getUserID } from '../../services/http.service'
 
 
 @Component({
@@ -17,14 +18,18 @@ import { userEmail, userId } from '../../services/http.service'
 })
 export class TaskComponent implements OnInit {
   filteredTasks: Task[] = []
+  totalElements = 0
+  pageSize = 10
+  currentPage = 0
   selectedStatus = 'ALL'
   displayedColumns: string[] = ['title', 'description', 'status', 'createdOn', 'deadline', 'actions']
 
   constructor(private dialog: MatDialog, private taskService: TaskService) { }
 
   async ngOnInit() {
-    const tasks = await this.taskService.listTasks()
+    const tasks = await this.taskService.listTasks(this.currentPage, this.pageSize)
     this.filteredTasks = tasks.content
+    this.updatePaginationInfos(tasks)
   }
 
   openAddTaskModal(): void {
@@ -61,13 +66,15 @@ export class TaskComponent implements OnInit {
       description: taskData.description.trim(),
       status: taskData.status,
       deadline: taskData.deadline,
-      assignedTo: userId as String
+      assignedTo: getUserID()
     }
 
-    const taskCreated = await this.taskService.addTask(task)
+    if (task.assignedTo) {
+      const taskCreated = await this.taskService.addTask(task)
 
-    if (taskCreated) {
-      await this.listTasks()
+      if (taskCreated) {
+        await this.listTasks()
+      }
     }
   }
 
@@ -76,8 +83,9 @@ export class TaskComponent implements OnInit {
       const tasks = await this.taskService.listTasksByStatus(this.selectedStatus)
       this.filteredTasks = tasks
     } else {
-      const tasksFiltered = await this.taskService.listTasks()
+      const tasksFiltered = await this.taskService.listTasks(this.currentPage, this.pageSize)
       this.filteredTasks = tasksFiltered.content
+      this.updatePaginationInfos(tasksFiltered)
     }
   }
 
@@ -87,7 +95,13 @@ export class TaskComponent implements OnInit {
     await this.listTasks()
   }
 
-  changePage(event: any) {
-    console.log(event)
+  updatePaginationInfos(event: any) {
+    this.totalElements = event.totalElements
+  }
+
+  async changePage(event: PageEvent) {
+    this.currentPage = event.pageIndex
+    this.pageSize = event.pageSize
+    await this.listTasks()
   }
 }
