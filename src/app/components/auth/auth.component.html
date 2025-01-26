@@ -1,0 +1,48 @@
+<mat-card>
+  <h1>{{ isLoginMode ? 'Login' : 'Registro' }}</h1>
+
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched">
+        O nome de usuário deve ter no mínimo 3 caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Senha</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched">
+        A senha deve ter no mínimo 6 caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      *ngIf="!isLoginMode"
+      appearance="outline"
+      class="full-width"
+    >
+      <mat-label>Confirme a Senha</mat-label>
+      <input matInput type="password" formControlName="confirmPassword" />
+      <mat-error
+        *ngIf="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched"
+      >
+        Confirme a senha corretamente.
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      {{ isLoginMode ? 'Login' : 'Registrar' }}
+    </button>
+    <button
+      mat-button
+      type="button"
+      color="accent"
+      (click)="toggleMode()"
+      class="toggle-button"
+    >
+      {{ isLoginMode ? 'Criar uma conta' : 'Já possui uma conta? Login' }}
+    </button>
+  </form>
+</mat-card>

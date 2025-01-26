@@ -1,0 +1,49 @@
+<html>
+<div>
+  <h2 mat-dialog-title>Adicionar Nova Tarefa</h2>
+  <mat-dialog-content>
+    <form [formGroup]="taskForm" class="task-form">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="title" />
+        <mat-error *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched">
+          O título é obrigatório
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+        <mat-error *ngIf="taskForm.get('description')?.invalid && taskForm.get('description')?.touched">
+          A descrição é obrigatória
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of statusOptions" [value]="status">
+            {{ status }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="taskForm.get('status')?.invalid && taskForm.get('status')?.touched">
+          O status é obrigatório
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Deadline</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="deadline" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="taskForm.get('deadline')?.invalid && taskForm.get('deadline')?.touched">
+          O deadline é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="onSave()" [disabled]="taskForm.invalid">Salvar</button>
+  </mat-dialog-actions>
+
+</div>
+
+</html>
