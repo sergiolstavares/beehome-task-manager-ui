@@ -1,5 +1,5 @@
 <mat-card>
-  <h1>{{ isLoginMode ? 'Login' : 'Registro' }}</h1>
+  <h1>Login</h1>
 
   <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline" class="full-width">
@@ -18,31 +18,11 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field
-      *ngIf="!isLoginMode"
-      appearance="outline"
-      class="full-width"
-    >
-      <mat-label>Confirme a Senha</mat-label>
-      <input matInput type="password" formControlName="confirmPassword" />
-      <mat-error
-        *ngIf="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched"
-      >
-        Confirme a senha corretamente.
-      </mat-error>
-    </mat-form-field>
-
     <button mat-raised-button color="primary" type="submit">
-      {{ isLoginMode ? 'Login' : 'Registrar' }}
+      Login
     </button>
-    <button
-      mat-button
-      type="button"
-      color="accent"
-      (click)="toggleMode()"
-      class="toggle-button"
-    >
-      {{ isLoginMode ? 'Criar uma conta' : 'Já possui uma conta? Login' }}
+    <button mat-button type="button" color="primary" (click)="goToRegister()" class="toggle-button">
+      Criar uma conta
     </button>
   </form>
 </mat-card>

@@ -1,0 +1,19 @@
+mat-card {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+button {
+  margin-top: 16px;
+}
+
+.toggle-button {
+  display: block;
+  margin: 10px auto;
+}

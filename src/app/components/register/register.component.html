@@ -1,0 +1,35 @@
+<html>
+<mat-card>
+  <h1>Registro</h1>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+        O nome é obrigatório.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        O email é obrigatório.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Senha</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        A senha deve ter no mínimo 6 caracteres.
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">
+      Registrar
+    </button>
+    <button mat-button type="button" color="primary" class="toggle-button" (click)="goToLogin()">
+      Já possui uma conta? Login
+    </button>
+  </form>
+</mat-card>
+</html>

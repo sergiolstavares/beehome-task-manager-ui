@@ -13,6 +13,7 @@ import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatTableModule } from '@angular/material/table'
 import { MatIconModule } from '@angular/material/icon'
 import { MatCardModule } from '@angular/material/card'
+import { MatToolbarModule } from '@angular/material/toolbar'
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MatCardModule } from '@angular/material/card'
     MatTableModule,
     MatPaginatorModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatToolbarModule
   ],
   exports: [
     CommonModule,
@@ -44,7 +46,8 @@ import { MatCardModule } from '@angular/material/card'
     MatPaginatorModule,
     MatTableModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatToolbarModule
   ],
 })
   export class SharedMaterialModule {

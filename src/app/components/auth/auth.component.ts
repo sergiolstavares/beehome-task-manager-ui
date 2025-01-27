@@ -9,11 +9,10 @@ import { SharedMaterialModule } from '../shared-material.module'
   standalone: true,
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css'],
-  imports: [SharedMaterialModule],
+  imports: [SharedMaterialModule]
 })
 export class AuthComponent {
   authForm: FormGroup
-  isLoginMode = true
   errorMessage: string | null = null
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
@@ -24,44 +23,28 @@ export class AuthComponent {
     })
   }
 
-  toggleMode() {
-    this.isLoginMode = !this.isLoginMode
-    if (this.isLoginMode) {
-      this.authForm.removeControl('confirmPassword')
-    } else {
-      this.authForm.addControl(
-        'confirmPassword',
-        this.fb.control('', [Validators.required])
-      )
-    }
-  }
-
   async onSubmit() {
     if (this.authForm.invalid) {
       return
     }
 
-    const { email, password, confirmPassword } = this.authForm.value
+    const { email, password } = this.authForm.value
 
-    if (!this.isLoginMode && password !== confirmPassword) {
-      alert('As senhas não coincidem!')
-      return
-    }
-
-    if (this.isLoginMode) {
-      try {
-        const response = await this.authService.login(email, password)
-        if (response) {
-          localStorage.setItem('token', response.token)
-          await this.router.navigate(['/task'])
-        } else {
-          this.errorMessage = 'Credenciais inválidas.'
-        }
-      } catch (err) {
-        this.errorMessage = 'Ocorreu um erro inesperado.'
+    try {
+      const response = await this.authService.login(email, password)
+      if (response) {
+        localStorage.setItem('token', response.token)
+        await this.router.navigate(['/task'])
+      } else {
+        this.errorMessage = 'Credenciais inválidas.'
       }
-    } else {
-      console.log('Registrando novo usuário:', { email, password })
+    } catch (err) {
+      this.errorMessage = 'Ocorreu um erro inesperado.'
     }
   }
+
+  async goToRegister() {
+    await this.router.navigate(['/register'])
+  }
 }
+

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core'
 import { TaskService } from '../../services/task.service'
 import { Task } from '../../models/task.model'
@@ -25,7 +26,7 @@ export class TaskComponent implements OnInit {
   selectedStatus = 'ALL'
   displayedColumns: string[] = ['title', 'description', 'status', 'createdOn', 'deadline', 'actions']
 
-  constructor(private dialog: MatDialog, private taskService: TaskService) { }
+  constructor(private dialog: MatDialog, private taskService: TaskService, private authService: AuthService) {}
 
   async ngOnInit() {
     const tasks = await this.taskService.listTasks(this.currentPage, this.pageSize)
@@ -131,5 +132,9 @@ export class TaskComponent implements OnInit {
     this.currentPage = event.pageIndex
     this.pageSize = event.pageSize
     await this.listTasks()
+  }
+
+  async handleOnClickLogout() {
+    await this.authService.logout()
   }
 }

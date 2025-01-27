@@ -19,7 +19,7 @@ export class HttpService {
     params?: { [key: string]: any },
     headers?: { [key: string]: string }
   ): Promise<T | null> {
-    const isPublicRoute = url.includes('/auth/login') || url.includes('/auth/register')
+    const isPublicRoute = url.includes('/auth/login') || url.includes('/users/register')
 
     const httpHeaders = isPublicRoute
       ? new HttpHeaders(headers || {})
