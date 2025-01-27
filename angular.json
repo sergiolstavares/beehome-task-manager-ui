@@ -39,7 +39,7 @@
               "namedChunks": false,
               "aot": false,
               "buildOptimizer": false
-            }
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
