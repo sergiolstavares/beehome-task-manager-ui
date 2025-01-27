@@ -1,1 +1,1 @@
-export const apiURL = 'http://beehome-task-manager-api-production.up.railway.app:8080'
+export const apiURL = 'https://beehome-task-manager-api-production.up.railway.app'
