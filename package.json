@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --output-hashing=all --source-map=false --no-hmr",
+    "build": "ng build --configuration production --output-hashing=all --source-map=false --max-old-space-size=512",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
