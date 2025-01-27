@@ -7,7 +7,8 @@ import { AddAndEditTaskModalComponent } from './components/add-edit-task-modal/a
 import { SharedMaterialModule } from '../shared-material.module'
 import { PageEvent } from '@angular/material/paginator'
 import { getUserID } from '../../services/http.service'
-
+import { decodeStatus } from '../../common/status'
+import { humanizeDateTime } from '../../common/date'
 
 @Component({
   selector: 'app-task',
@@ -38,6 +39,18 @@ export class TaskComponent implements OnInit {
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
         this.addTask(data)
+      }
+    })
+  }
+
+  openEditTaskModal(task: any): void {
+    const dialogRef = this.dialog.open(AddAndEditTaskModalComponent, {
+      data: task
+    })
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.editTask(data)
       }
     })
   }
@@ -78,6 +91,13 @@ export class TaskComponent implements OnInit {
     }
   }
 
+  async editTask(updatedTask: any): Promise<void> {
+    if (new Date(updatedTask.deadline) < new Date()) updatedTask.deadline = null
+
+    await this.taskService.updateTask(updatedTask)
+    await this.listTasks() // Atualiza a lista de tarefas após editar
+  }
+
   async listTasks() {
     if (this.selectedStatus !== 'ALL') {
       const tasks = await this.taskService.listTasksByStatus(this.selectedStatus)
@@ -97,6 +117,14 @@ export class TaskComponent implements OnInit {
 
   updatePaginationInfos(event: any) {
     this.totalElements = event.totalElements
+  }
+
+  decodeStatus(status: string) {
+    return decodeStatus(status)
+  }
+
+  formatDate(date: string) {
+    return humanizeDateTime(date)
   }
 
   async changePage(event: PageEvent) {

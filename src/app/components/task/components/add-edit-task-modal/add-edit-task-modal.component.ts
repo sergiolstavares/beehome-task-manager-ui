@@ -1,6 +1,6 @@
-import { Component } from '@angular/core'
+import { Component, Inject } from '@angular/core'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
-import { MatDialogRef } from '@angular/material/dialog'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { SharedMaterialModule } from '../../../shared-material.module'
 
 @Component({
@@ -14,12 +14,17 @@ export class AddAndEditTaskModalComponent {
   taskForm: FormGroup
   statusOptions = ['PENDING', 'IN_PROGRESS', 'COMPLETED']
 
-  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<AddAndEditTaskModalComponent>) {
+  constructor(
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<AddAndEditTaskModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this.taskForm = this.fb.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      deadline: ['', [Validators.required]],
-      status: ['', [Validators.required]]
+      id: [data?.id || ''],
+      title: [data?.title || '', [Validators.required]],
+      description: [data?.description || '', [Validators.required]],
+      deadline: [data?.deadline || '', [Validators.required]],
+      status: [data?.status || '', [Validators.required]]
     })
   }
 
