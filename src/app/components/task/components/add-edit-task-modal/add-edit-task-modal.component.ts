@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { SharedMaterialModule } from '../../../shared-material.module'
+import { decodeStatus } from '../../../../common/status'
 
 @Component({
   selector: 'app-add-edit-task-modal',
@@ -36,5 +37,9 @@ export class AddAndEditTaskModalComponent {
     if (this.taskForm.valid) {
       this.dialogRef.close(this.taskForm.value)
     }
+  }
+
+  decodeStatus(status: string) {
+    return decodeStatus(status)
   }
 }

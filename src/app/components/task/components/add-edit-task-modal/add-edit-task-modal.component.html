@@ -21,7 +21,7 @@
         <mat-label>Status</mat-label>
         <mat-select formControlName="status">
           <mat-option *ngFor="let status of statusOptions" [value]="status">
-            {{ status }}
+            {{ decodeStatus(status) }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="taskForm.get('status')?.invalid && taskForm.get('status')?.touched">
