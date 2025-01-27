@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material/paginator'
 import { getUserID } from '../../services/http.service'
 import { decodeStatus } from '../../common/status'
 import { humanizeDateTime } from '../../common/date'
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-task',
@@ -26,7 +27,7 @@ export class TaskComponent implements OnInit {
   selectedStatus = 'ALL'
   displayedColumns: string[] = ['title', 'description', 'status', 'createdOn', 'deadline', 'actions']
 
-  constructor(private dialog: MatDialog, private taskService: TaskService, private authService: AuthService) {}
+  constructor(private dialog: MatDialog, private taskService: TaskService, private authService: AuthService, private notificationService: NotificationService) {}
 
   async ngOnInit() {
     const tasks = await this.taskService.listTasks(this.currentPage, this.pageSize)
@@ -70,7 +71,7 @@ export class TaskComponent implements OnInit {
 
   async deleteTask(id: string): Promise<any> {
     await this.taskService.deleteTask(id)
-
+    this.notificationService.showSuccess('Tarefa removida com sucesso')
     await this.listTasks()
   }
 
@@ -87,6 +88,7 @@ export class TaskComponent implements OnInit {
       const taskCreated = await this.taskService.addTask(task)
 
       if (taskCreated) {
+        this.notificationService.showSuccess('Tarefa criada com sucesso')
         await this.listTasks()
       }
     }
@@ -95,8 +97,12 @@ export class TaskComponent implements OnInit {
   async editTask(updatedTask: any): Promise<void> {
     if (new Date(updatedTask.deadline) < new Date()) updatedTask.deadline = null
 
-    await this.taskService.updateTask(updatedTask)
-    await this.listTasks() // Atualiza a lista de tarefas após editar
+    const response = await this.taskService.updateTask(updatedTask)
+
+    if (response.id) {
+      this.notificationService.showSuccess('Tarefa atualizada com sucesso')
+      await this.listTasks()
+    }
   }
 
   async listTasks() {

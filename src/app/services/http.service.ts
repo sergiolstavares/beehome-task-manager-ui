@@ -4,13 +4,14 @@ import { firstValueFrom, of } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { Router } from '@angular/router'
 import { jwtDecode } from 'jwt-decode'
+import { ErrorHandlerService } from './error.handler.service'
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private errorHandler: ErrorHandlerService) { }
 
   async request<T>(
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',
@@ -25,22 +26,21 @@ export class HttpService {
       ? new HttpHeaders(headers || {})
       : new HttpHeaders({
         Authorization: `Bearer ${localStorage.getItem('token')}`,
-        ...headers,
+        ...headers
       })
 
     const options = {
       headers: httpHeaders,
       params: new HttpParams({ fromObject: params || {} }),
-      body,
+      body
     }
 
     try {
       const response = await firstValueFrom(
         this.http.request<T>(method, url, options).pipe(
           catchError((error) => {
-            if (error.status === 403) {
-              this.router.navigate(['/auth'])
-            }
+            this.errorHandler.handleError(error)
+            
             return of(null)
           })
         )
