@@ -33,7 +33,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     MatIconModule,
     MatCardModule,
     MatToolbarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatNativeDateModule
   ],
   exports: [
     CommonModule,
@@ -50,7 +51,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     MatIconModule,
     MatCardModule,
     MatToolbarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatNativeDateModule 
   ],
 })
   export class SharedMaterialModule {

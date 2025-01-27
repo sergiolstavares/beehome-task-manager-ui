@@ -30,7 +30,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Deadline</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="deadline" />
+        <input matInput [matDatepicker]="picker" [matDatepickerFilter]="disablePastDates" formControlName="deadline" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-error *ngIf="taskForm.get('deadline')?.invalid && taskForm.get('deadline')?.touched">

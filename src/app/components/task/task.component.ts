@@ -9,7 +9,7 @@ import { SharedMaterialModule } from '../shared-material.module'
 import { PageEvent } from '@angular/material/paginator'
 import { getUserID } from '../../services/http.service'
 import { decodeStatus } from '../../common/status'
-import { humanizeDateTime } from '../../common/date'
+import { humanizeDate, humanizeDateTime } from '../../common/date'
 import { NotificationService } from '../../services/notification.service';
 
 @Component({
@@ -130,8 +130,12 @@ export class TaskComponent implements OnInit {
     return decodeStatus(status)
   }
 
-  formatDate(date: string) {
+  formatDateTime(date: string) {
     return humanizeDateTime(date)
+  }
+
+  formatDate(date: string) {
+    return humanizeDate(date)
   }
 
   async changePage(event: PageEvent) {

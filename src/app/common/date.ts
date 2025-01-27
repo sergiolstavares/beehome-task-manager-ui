@@ -13,3 +13,17 @@ export function humanizeDateTime(date: string) {
 
   return `${day}/${month}/${year} ${hours}:${minutes}`
 }
+
+export function humanizeDate(date: string) {
+  const dateObj = new Date(date)
+
+  if (isNaN(dateObj.getTime())) {
+      return "Data inválida"
+  }
+
+  const day = String(dateObj.getDate()).padStart(2, '0')
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+  const year = dateObj.getFullYear()
+
+  return `${day}/${month}/${year}`
+}

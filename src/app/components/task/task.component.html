@@ -55,7 +55,7 @@
             </ng-container>
             <ng-container matColumnDef="createdOn">
               <th mat-header-cell *matHeaderCellDef> Criada em </th>
-              <td mat-cell *matCellDef="let task"> {{formatDate(task.createdOn)}} </td>
+              <td mat-cell *matCellDef="let task"> {{formatDateTime(task.createdOn)}} </td>
             </ng-container>
             <ng-container matColumnDef="deadline">
               <th mat-header-cell *matHeaderCellDef> Deadline </th>
