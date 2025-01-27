@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core'
 import { Task } from '../models/task.model'
 import { HttpService } from './http.service'
+import { apiURL } from '../constants/url'
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:8080/tasks'
+  private apiUrl = `${apiURL}/tasks`
 
   constructor(private httpService: HttpService) {}
 
