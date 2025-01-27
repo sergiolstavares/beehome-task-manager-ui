@@ -40,14 +40,13 @@ export class HttpService {
         this.http.request<T>(method, url, options).pipe(
           catchError((error) => {
             this.errorHandler.handleError(error)
-            
+
             return of(null)
           })
         )
       )
       return response
     } catch (error) {
-      console.error('Erro na requisição:', error)
       return null
     }
   }

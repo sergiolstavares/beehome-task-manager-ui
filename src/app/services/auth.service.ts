@@ -21,7 +21,6 @@ export class AuthService {
 
   async logout() {
     localStorage.removeItem('token')
-    console.log('ae')
     await this.router.navigate(['/login'])
   }
 }
