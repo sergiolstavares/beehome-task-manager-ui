@@ -37,8 +37,7 @@
               "optimization": false,
               "sourceMap": false,
               "namedChunks": false,
-              "aot": false,
-              "buildOptimizer": false
+              "aot": false
             },
             "development": {
               "optimization": false,
