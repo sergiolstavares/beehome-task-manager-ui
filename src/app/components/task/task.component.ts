@@ -95,8 +95,6 @@ export class TaskComponent implements OnInit {
   }
 
   async editTask(updatedTask: any): Promise<void> {
-    if (new Date(updatedTask.deadline) < new Date()) updatedTask.deadline = null
-
     const response = await this.taskService.updateTask(updatedTask)
 
     if (response.id) {
